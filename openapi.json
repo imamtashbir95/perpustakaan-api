@@ -1,0 +1,238 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Buku API",
+    "description": "RESTful API for managing books in a library.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/api/buku": {
+      "get": {
+        "summary": "Retrieve all books",
+        "description": "Fetch a list of all books in the database.",
+        "responses": {
+          "200": {
+            "description": "A list of books.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Book"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to fetch data."
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new book",
+        "description": "Add a new book to the database.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book added successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to add data."
+          }
+        }
+      }
+    },
+    "/api/buku/{id}": {
+      "get": {
+        "summary": "Get book by ID",
+        "description": "Retrieve a specific book using its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Book"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Book not found."
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a book by ID",
+        "description": "Update all fields of a specific book.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book updated successfully."
+          },
+          "500": {
+            "description": "Failed to update data."
+          }
+        }
+      },
+      "patch": {
+        "summary": "Partially update a book by ID",
+        "description": "Update one or more fields of a specific book.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookInput"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Book updated successfully."
+          },
+          "400": {
+            "description": "No data to update."
+          },
+          "500": {
+            "description": "Failed to update data."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a book by ID",
+        "description": "Remove a book from the database by its ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Book deleted successfully."
+          },
+          "500": {
+            "description": "Failed to delete data."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Book": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "judul": {
+            "type": "string"
+          },
+          "pengarang": {
+            "type": "string"
+          },
+          "tahun": {
+            "type": "integer"
+          },
+          "jumlah": {
+            "type": "integer"
+          }
+        }
+      },
+      "BookInput": {
+        "type": "object",
+        "properties": {
+          "judul": {
+            "type": "string"
+          },
+          "pengarang": {
+            "type": "string"
+          },
+          "tahun": {
+            "type": "integer"
+          },
+          "jumlah": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

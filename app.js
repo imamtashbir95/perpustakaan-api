@@ -75,6 +75,35 @@ app.put("/api/buku/:id", async (req, res) => {
     }
 });
 
+app.patch("/api/buku/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const { judul, pengarang, tahun, jumlah } = req.body;
+
+        // Periksa field mana yang diperbarui
+        const fields = [];
+        if (judul) fields.push(`judul = '${judul}'`);
+        if (pengarang) fields.push(`pengarang = '${pengarang}'`);
+        if (tahun) fields.push(`tahun = '${tahun}'`);
+        if (jumlah) fields.push(`jumlah = '${jumlah}'`);
+
+        // Gabungkan field yang diperbarui
+        const updateFields = fields.join(", ");
+
+        // Jika tidak ada field yang diperbarui
+        if (!updateFields) {
+            res.status(400).json({ message: "Tidak ada data yang diperbarui" });
+            return;
+        }
+
+        // Jalankan query update
+        await db.execute(`UPDATE buku SET ${updateFields} WHERE id = ?`, [id]);
+        res.json({ message: "Buku berhasil diperbarui" })
+    } catch (error) {
+        res.status(500).json({ message: "Gagal memperbarui data" });
+    }
+});
+
 // 5. Menghapus buku
 app.delete("/api/buku/:id", async (req, res) => {
     try {

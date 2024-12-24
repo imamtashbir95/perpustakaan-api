@@ -29,7 +29,7 @@ app.get("/api/buku", async (req, res) => {
         const [rows] = await db.execute("SELECT * FROM buku");
         res.json(rows);
     } catch (error) {
-        res.status(500).json({ message: "Gagal mengambil data" });
+        res.status(500).json({ message: "Gagal mengambil data." });
     }
 });
 
@@ -42,7 +42,7 @@ app.get("/api/buku/:id", async (req, res) => {
         ]);
         res.json(rows);
     } catch (error) {
-        res.status(404).json({ message: "Tidak menemukan data" });
+        res.status(404).json({ message: "Tidak menemukan data." });
     }
 });
 
@@ -54,9 +54,9 @@ app.post("/api/buku", async (req, res) => {
             "INSERT INTO buku (judul, pengarang, tahun, jumlah) VALUES (?, ?, ?, ?)",
             [judul, pengarang, tahun, jumlah]
         );
-        res.json({ message: "Buku berhasil ditambahkan", id: result.insertId });
+        res.json({ message: "Buku berhasil ditambahkan.", id: result.insertId });
     } catch (error) {
-        res.status(500).json({ message: "Gagal menambahkan data" });
+        res.status(500).json({ message: "Gagal menambahkan data." });
     }
 });
 
@@ -69,9 +69,9 @@ app.put("/api/buku/:id", async (req, res) => {
             "UPDATE buku SET judul = ?, pengarang = ?, tahun = ?, jumlah = ? WHERE id = ?",
             [judul, pengarang, tahun, jumlah, id]
         );
-        res.json({ message: "Buku berhasil diperbarui" });
+        res.json({ message: "Buku berhasil diperbarui." });
     } catch (error) {
-        res.status(500).json({ message: "Gagal memperbarui data" });
+        res.status(500).json({ message: "Gagal memperbarui data." });
     }
 });
 
@@ -92,15 +92,15 @@ app.patch("/api/buku/:id", async (req, res) => {
 
         // Jika tidak ada field yang diperbarui
         if (!updateFields) {
-            res.status(400).json({ message: "Tidak ada data yang diperbarui" });
+            res.status(400).json({ message: "Tidak ada data yang diperbarui." });
             return;
         }
 
         // Jalankan query update
         await db.execute(`UPDATE buku SET ${updateFields} WHERE id = ?`, [id]);
-        res.json({ message: "Buku berhasil diperbarui" })
+        res.json({ message: "Buku berhasil diperbarui." })
     } catch (error) {
-        res.status(500).json({ message: "Gagal memperbarui data" });
+        res.status(500).json({ message: "Gagal memperbarui data." });
     }
 });
 
@@ -109,9 +109,9 @@ app.delete("/api/buku/:id", async (req, res) => {
     try {
         const id = req.params.id;
         await db.execute("DELETE FROM buku WHERE id = ?", [id]);
-        res.json({ message: "Buku berhasil dihapus" });
+        res.json({ message: "Buku berhasil dihapus." });
     } catch (error) {
-        res.status(500).json({ message: "Gagal menghapus data" });
+        res.status(500).json({ message: "Gagal menghapus data." });
     }
 });
 

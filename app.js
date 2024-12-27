@@ -40,9 +40,13 @@ app.get("/api/buku/:id", async (req, res) => {
         const [rows] = await db.execute("SELECT * FROM buku WHERE id = ?", [
             id,
         ]);
+        if (rows.length === 0) {
+            res.status(404).json({ message: "Tidak menemukan data." });
+            return;
+        }
         res.json(rows);
     } catch (error) {
-        res.status(404).json({ message: "Tidak menemukan data." });
+        res.status(500).json({ message: "Gagal menambahkan data." });
     }
 });
 
@@ -54,7 +58,7 @@ app.post("/api/buku", async (req, res) => {
             "INSERT INTO buku (judul, pengarang, tahun, jumlah) VALUES (?, ?, ?, ?)",
             [judul, pengarang, tahun, jumlah]
         );
-        res.json({ message: "Buku berhasil ditambahkan.", id: result.insertId });
+        res.status(201).json({ message: "Buku berhasil ditambahkan.", id: result.insertId });
     } catch (error) {
         res.status(500).json({ message: "Gagal menambahkan data." });
     }
@@ -75,6 +79,7 @@ app.put("/api/buku/:id", async (req, res) => {
     }
 });
 
+// 5. Memperbarui buku pada field tertentu
 app.patch("/api/buku/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -104,7 +109,7 @@ app.patch("/api/buku/:id", async (req, res) => {
     }
 });
 
-// 5. Menghapus buku
+// 6. Menghapus buku
 app.delete("/api/buku/:id", async (req, res) => {
     try {
         const id = req.params.id;
@@ -119,3 +124,4 @@ app.listen(3000, () => {
     console.log("Server berjalan di port 3000");
 });
 
+module.exports = app

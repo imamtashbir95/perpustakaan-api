@@ -5,5 +5,10 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mysql2": "^3.11.5"
+  },
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "mochai": "^0.2.5",
+    "supertest": "^7.0.0"
   }
 }

@@ -1,4 +1,26 @@
 {
+  "name": "perpustakaan-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "library",
+    "book-management",
+    "RESTful-API",
+    "Node.js",
+    "Express.js",
+    "MySQL",
+    "CRUD",
+    "backend",
+    "API",
+    "library-system",
+    "book-collection"
+  ],
+  "author": "Imam Tashbir Arrahman",
+  "license": "ISC",
+  "description": "The Book Management API is a RESTful API built with Node.js and MySQL, designed to manage a collection of books in a library or similar system. It supports basic CRUD (create, read, update, delete) operations, making it easy to manage book data efficiently.",
   "dependencies": {
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
